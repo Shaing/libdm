@@ -40,7 +40,48 @@ void DEVMAN::listDeviceRegPro(const int& property, const void* guidInterface, co
 		for(iDev = 0; (Status = SetupDiEnumDeviceInfo(hDevInfo, iDev, &DeviceInfoData)); iDev++)
 		{	
 			if(g == NULL)
-				proPair.first = "NULL";
+			{
+				Status = SetupDiGetDeviceRegistryProperty(
+															hDevInfo,
+															&DeviceInfoData,
+															SPDRP_CLASSGUID,
+															&PropertyRegDataType,
+															NULL,
+															0,
+															&RequiredLen
+														  );
+				if(RequiredLen != 0)
+				{
+					pRegPropertyBuffer = (PBYTE)malloc(RequiredLen);
+					Status = SetupDiGetDeviceRegistryProperty(
+						hDevInfo,//_In_       HDEVINFO DeviceInfoSet,
+						&DeviceInfoData,//_In_       PSP_DEVINFO_DATA DeviceInfoData,
+						SPDRP_CLASSGUID, //_In_       DWORD Property,
+						&PropertyRegDataType,//_Out_opt_  PDWORD PropertyRegDataType,
+						pRegPropertyBuffer,//_Out_opt_  PBYTE PropertyBuffer,
+						RequiredLen, //_In_       DWORD PropertyBufferSize,
+						&RequiredLen//_Out_opt_  PDWORD RequiredSize
+					);
+					free(pRegPropertyBuffer);
+				}
+
+				if(SetupDiCreateDeviceInterface(hDevInfo,
+												&DeviceInfoData,
+												&DeviceInfoData.ClassGuid,
+												0L,
+												0L,
+												&DevInterfaceData))
+				{
+					RequiredLen = 0;
+					Status = SetupDiGetDeviceInterfaceDetail(hDevInfo, &DevInterfaceData, NULL, 0, &RequiredLen, NULL);
+					pDevDetail = (PSP_DEVICE_INTERFACE_DETAIL_DATA)malloc(RequiredLen);
+					pDevDetail->cbSize = sizeof(SP_DEVICE_INTERFACE_DETAIL_DATA);
+					Status = SetupDiGetDeviceInterfaceDetail(hDevInfo, &DevInterfaceData, pDevDetail, RequiredLen, &RequiredLen, NULL);
+					proPair.first = pDevDetail->DevicePath;
+					free(pDevDetail);
+				}
+				//proPair.first = "NULL";
+			}
 			else
 			{
 				Status = SetupDiEnumDeviceInterfaces(hDevInfo, 0, g, iDev, &DevInterfaceData);

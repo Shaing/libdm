@@ -54,11 +54,11 @@ int main(int argc, char* argv[])
 		cout << "[USB]" << endl;
 		dm.listDeviceRegPro(i, (void*)&GUID_DEVINTERFACE_USB_DEVICE, NULL, (DIGCF_PRESENT | DIGCF_DEVICEINTERFACE));
 		dm.coutList();
+		cout << "[PCI]" << endl;
+		dm.listDeviceRegPro(i, NULL , "PCI", (DIGCF_PRESENT | DIGCF_ALLCLASSES));
+		dm.coutList();
 	}
 
-	cout << "[NULL]" << endl;
-	dm.listDeviceRegPro(8, NULL , NULL, (DIGCF_PRESENT | DIGCF_ALLCLASSES));
-	dm.coutList();
 
 	return 0;
 }
