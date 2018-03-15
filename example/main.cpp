@@ -45,20 +45,51 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-	DEVMAN dm;
-	for(int i = 0; i < 26; ++i)
+	int which = 0;
+	if(argc < 3)
 	{
-		cout << "[DISK]" << endl;
-		dm.listDeviceRegPro(i, (void*)&GUID_DEVINTERFACE_DISK, NULL, (DIGCF_PRESENT | DIGCF_DEVICEINTERFACE));
-		dm.coutList();
-		cout << "[USB]" << endl;
-		dm.listDeviceRegPro(i, (void*)&GUID_DEVINTERFACE_USB_DEVICE, NULL, (DIGCF_PRESENT | DIGCF_DEVICEINTERFACE));
-		dm.coutList();
-		cout << "[PCI]" << endl;
-		dm.listDeviceRegPro(i, NULL , "PCI", (DIGCF_PRESENT | DIGCF_ALLCLASSES));
-		dm.coutList();
-	}
+		if(argc == 2) which = atoi(argv[1]);
+		DEVMAN dm;
+		for(int i = 0; i < 26; ++i)
+		{
+			switch(which)
+			{
+				case 1:
+					cout << "[DISK]" << endl;
+					dm.listDeviceRegPro(i, (void*)&GUID_DEVINTERFACE_DISK, NULL, (DIGCF_PRESENT | DIGCF_DEVICEINTERFACE));
+					dm.coutList();
+					break;
+				case 2:
+					cout << "[USB]" << endl;
+					dm.listDeviceRegPro(i, (void*)&GUID_DEVINTERFACE_USB_DEVICE, NULL, (DIGCF_PRESENT | DIGCF_DEVICEINTERFACE));
+					dm.coutList();
+					break;
+				case 3:
+					cout << "[PCI]" << endl;
+					dm.listDeviceRegPro(i, NULL , "PCI", (DIGCF_PRESENT | DIGCF_ALLCLASSES));
+					dm.coutList();
+					break;
+				default:
+					cout << "[DISK]" << endl;
+					dm.listDeviceRegPro(i, (void*)&GUID_DEVINTERFACE_DISK, NULL, (DIGCF_PRESENT | DIGCF_DEVICEINTERFACE));
+					dm.coutList();
+					cout << "[USB]" << endl;
+					dm.listDeviceRegPro(i, (void*)&GUID_DEVINTERFACE_USB_DEVICE, NULL, (DIGCF_PRESENT | DIGCF_DEVICEINTERFACE));
+					dm.coutList();
+					cout << "[PCI]" << endl;
+					dm.listDeviceRegPro(i, NULL , "PCI", (DIGCF_PRESENT | DIGCF_ALLCLASSES));
+					dm.coutList();
+					break;
+			}
+		}
 
+	}
+	else
+		cout << "dm [1:DISK/2:USB/3:PCI]" << endl;
+
+	int e = 0;
+	cout << "please press any key + enter to exit this windows...";
+	cin >> e;
 
 	return 0;
 }
