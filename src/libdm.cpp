@@ -39,6 +39,8 @@ void DEVMAN::listDeviceRegPro(const int& property, const void* guidInterface, co
 
 		for(iDev = 0; (Status = SetupDiEnumDeviceInfo(hDevInfo, iDev, &DeviceInfoData)); iDev++)
 		{	
+			proPair.first.clear();
+			proPair.second.clear();
 			if(g == NULL)
 			{
 				Status = SetupDiGetDeviceRegistryProperty(
