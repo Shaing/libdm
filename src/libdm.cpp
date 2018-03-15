@@ -82,7 +82,6 @@ void DEVMAN::listDeviceRegPro(const int& property, const void* guidInterface, co
 					proPair.first = pDevDetail->DevicePath;
 					free(pDevDetail);
 				}
-				//proPair.first = "NULL";
 			}
 			else
 			{
