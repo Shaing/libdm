@@ -11,6 +11,7 @@
 #include "libdm.h"
 using std::pair;
 using std::string;
+using namespace idm;
 
 void DEVMAN::listDeviceRegPro(const int& property, const void* guidInterface, const char* devType, const unsigned int& flags)
 {
