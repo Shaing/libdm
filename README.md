@@ -9,6 +9,11 @@
 # Testing env
 - Visual Studio 2015
 - Windows 7 x64
+- Windows 10 x64
 # Tutorials
 - (update soon)
+# Release Note
+- [180604] example to utilitym add usage.
+![usage](/usage.PNG)
+
 
