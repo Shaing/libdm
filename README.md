@@ -13,7 +13,7 @@
 # Tutorials
 - (update soon)
 # Release Note
-- [180604] example to utilitym add usage.
+- [180604] example to utility add usage.
 ![usage](/usage.PNG)
 
 
